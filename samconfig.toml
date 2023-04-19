@@ -1,0 +1,13 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "test-api"
+resolve_s3 = true
+s3_prefix = "test-api"
+region = "eu-west-2"
+profile = "joe"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = """
+DEBUG=true \
+"""
+image_repositories = []

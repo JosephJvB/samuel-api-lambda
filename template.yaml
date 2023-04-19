@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'Testo'
+
+Parameters:
+  DEBUG:
+    Type: String
+    Default: "true"
+    AllowedValues:
+      - "true"
+      - "false"
+
+Globals:
+  Function:
+    Timeout: 15
+    MemorySize: 128
+    Runtime: nodejs18.x
+    Environment:
+      Variables:
+        DEBUG: !Ref DEBUG
+
+Resources:
+  HttpApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: v1
+      # does this even work? maybe only if lambda is not proxy ie: APIGateway handles HTTP stuff
+      Cors:
+        AllowHeaders: "*"
+        AllowMethods: "*"
+        AllowOrigin: "*"
+
+  ApiFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: index.handler
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /test
+            Method: get
+            RestApiId: !Ref HttpApiGateway
+        OptionsEvent:
+          Type: Api
+          Properties:
+            Path: /test
+            Method: options
+            RestApiId: !Ref HttpApiGateway
+
+Outputs:
+  HttpApiGateway:
+    Description: ApiGateway between front end requests and backend lambda
+    Value: !Ref HttpApiGateway
+  ApiFn:
+    Description: Get spotify top items
+    Value: !Ref ApiFn

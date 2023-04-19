@@ -25,10 +25,10 @@ Resources:
     Properties:
       StageName: v1
       # does this even work? maybe only if lambda is not proxy ie: APIGateway handles HTTP stuff
-      Cors:
-        AllowHeaders: "*"
-        AllowMethods: "*"
-        AllowOrigin: "*"
+      # Cors:
+      #   AllowHeaders: "*"
+      #   AllowMethods: "*"
+      #   AllowOrigin: "*"
 
   ApiFn:
     Type: AWS::Serverless::Function
@@ -51,8 +51,8 @@ Resources:
 
 Outputs:
   HttpApiGateway:
-    Description: ApiGateway between front end requests and backend lambda
+    Description: testo
     Value: !Ref HttpApiGateway
   ApiFn:
-    Description: Get spotify top items
+    Description: testo
     Value: !Ref ApiFn

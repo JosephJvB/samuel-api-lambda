@@ -1,5 +1,6 @@
 exports.handler = async (event) => {
   console.log({ event });
+  await new Promise((r) => setTimeout(300, r));
   return {
     headers: {
       "Content-Type": "application/json",
